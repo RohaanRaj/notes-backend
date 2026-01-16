@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      DATABASE_URL: postgres://app:app@db:5432?sslmode=disable
+      JWT_SECRET: snuffbutt
+    depends_on:
+      - db
+
+  migrate:
+    image: migrate/migrate
+    volumes:
+      - ./migrations:/migrations
+    command: [
+      "-path", "/migrations", "-database", "postgres://app:app@db:5432?sslmode=disable", "up"
+    ]
+    depends_on:
+      - db
+
+
+
+  db:
+    image: postgres:16
+    container_name: notesdb
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: app
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
+
