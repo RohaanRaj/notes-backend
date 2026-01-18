@@ -31,7 +31,6 @@ pipeline {
 		stage('Compose up'){
 			steps{
 				sh 'docker compose up -d'
-				sh 'sleep 15'
 			}
 		}
 
