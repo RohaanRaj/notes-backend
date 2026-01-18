@@ -34,6 +34,12 @@ pipeline {
 			}
 		}
 
+		stage('Test'){
+			steps{
+				sh 'curl -X POST -d '{"email":"abc@gmail.com", "password":"supersecret"}' localhost:9000/register'
+			}
+		}
+
 		stage('Teardown'){
 			steps{
 				sh 'docker compose down -v'
