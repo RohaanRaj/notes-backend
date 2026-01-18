@@ -9,17 +9,18 @@ pipeline {
 			}
 		}
 
+		stage('compose config check'){
+			steps{
+				sh 'docker compose config'
+			}
+		}
+
 		stage('Docker build'){
 			steps{
 				sh 'docker build -t notes-api .'
 			}
 		}
 
-		stage('compose config check'){
-			steps{
-				sh 'docker compose config'
-			}
-		}
 
 		stage('Compose build'){
 			steps{
@@ -37,7 +38,7 @@ pipeline {
 		stage('Test'){
 			steps{
 				sh '''
-				curl -X POST -d '{"email":"abc@gmail.com", "password":"supersecret"}' localhost:9000/register
+				curl -X POST -d '{"email":"abc@gmail.com", "password":"supersecret"}' http://localhost:9000/register
 				'''
 			}
 		}
