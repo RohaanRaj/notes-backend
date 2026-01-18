@@ -36,7 +36,9 @@ pipeline {
 
 		stage('Test'){
 			steps{
-				sh 'curl -X POST -d '{"email":"abc@gmail.com", "password":"supersecret"}' localhost:9000/register'
+				sh '''
+				curl -X POST -d '{"email":"abc@gmail.com", "password":"supersecret"}' localhost:9000/register
+				'''
 			}
 		}
 
